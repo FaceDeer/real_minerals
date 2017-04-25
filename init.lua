@@ -1,32 +1,36 @@
+-- internationalization boilerplate
+local MP = minetest.get_modpath(minetest.get_current_modname())
+local S, NS = dofile(MP.."/intllib.lua")
+
 ---------------------------------------------------------------------------------------------------
 -- Metals
 
 local metals_list = {
-	{[name]='bismuth',			[level]=0,	[desc]=S('Bismuth'),},
-	{[name]='zinc',				[level]=0,	[desc]=S('Zinc'),},
-	{[name]='tin',				[level]=0,	[desc]=S('Tin'),},
-	{[name]='copper',			[level]=1,	[desc]=S('Copper'),},
-	{[name]='lead',				[level]=2,	[desc]=S('Lead'),},
-	{[name]='silver',			[level]=2,	[desc]=S('Silver'),},
-	{[name]='gold',				[level]=2,	[desc]=S('Gold'),},
-	{[name]='brass',			[level]=2,	[desc]=S('Brass'),				[recipe]={"copper","copper","copper","zinc"},},
-	{[name]='sterling_silver',	[level]=2,	[desc]=S('Sterling Silver'),	[recipe]={"silver","silver","silver","copper"},},
-	{[name]='rose_gold',		[level]=2,	[desc]=S('Rose Gold'),			[recipe]={"gold","gold","gold","brass"},},
-	{[name]='oroide',			[level]=2,	[desc]=S('Oroide'),				[recipe]={"copper","copper","tin","zinc"},},
-	{[name]='black_bronze',		[level]=2,	[desc]=S('Black Bronze'),		[recipe]={"copper","copper","gold","silver"},},
-	{[name]='bismuth_bronze',	[level]=2,	[desc]=S('Bismuth Bronze'),		[recipe]={"copper","copper","bismuth","tin"},},
-	{[name]='tumbaga',			[level]=2,	[desc]=S('Tumbaga'),			[recipe]={"copper","gold"},},
-	{[name]='bronze',			[level]=2,	[desc]=S('Bronze'),				[recipe]={"copper","copper","copper","tin"},},
-	{[name]='aluminium',		[level]=2,	[desc]=S('Aluminium'),},
-	{[name]='platinum',			[level]=3,	[desc]=S('Platinum'),},
-	{[name]='pig_iron',			[level]=3,	[desc]=S('Pig Iron'),},
-	{[name]='wrought_iron',		[level]=3,	[desc]=S('Wrought Iron'),},
-	{[name]='german_silver',	[level]=4,	[desc]=S('German Silver'),		[recipe]={"copper","copper","copper","nickel"},},
-	{[name]='albata',			[level]=4,	[desc]=S('Albata'),				[recipe]={"copper","nickel","zinc","zinc"},},
-	{[name]='nickel',			[level]=4,	[desc]=S('Nickel'),},
-	{[name]='steel',			[level]=4,	[desc]=S('Steel'),				[recipe]={"wrought_iron","wrought_iron","wrought_iron","pig_iron",},},
-	{[name]='monel',			[level]=4,	[desc]=S('Monel'),				[recipe]={"nickel","nickel","nickel","copper"},},
-	{[name]='black_steel'		[level]=5,	[desc]=S('Black Steel'),		[recipe]={"steel","steel","nickel","black_bronze"},},
+	{name='bismuth',			level=0,	desc=S('Bismuth'),},
+	{name='zinc',				level=0,	desc=S('Zinc'),},
+	{name='tin',				level=0,	desc=S('Tin'),},
+	{name='copper',				level=1,	desc=S('Copper'),},
+	{name='lead',				level=2,	desc=S('Lead'),},
+	{name='silver',				level=2,	desc=S('Silver'),},
+	{name='gold',				level=2,	desc=S('Gold'),},
+	{name='brass',				level=2,	desc=S('Brass'),			recipe={"copper","copper","copper","zinc"},},
+	{name='sterling_silver',	level=2,	desc=S('Sterling Silver'),	recipe={"silver","silver","silver","copper"},},
+	{name='rose_gold',			level=2,	desc=S('Rose Gold'),		recipe={"gold","gold","gold","brass"},},
+	{name='oroide',				level=2,	desc=S('Oroide'),			recipe={"copper","copper","tin","zinc"},},
+	{name='black_bronze',		level=2,	desc=S('Black Bronze'),		recipe={"copper","copper","gold","silver"},},
+	{name='bismuth_bronze',		level=2,	desc=S('Bismuth Bronze'),	recipe={"copper","copper","bismuth","tin"},},
+	{name='tumbaga',			level=2,	desc=S('Tumbaga'),			recipe={"copper","gold"},},
+	{name='bronze',				level=2,	desc=S('Bronze'),			recipe={"copper","copper","copper","tin"},},
+	{name='aluminium',			level=2,	desc=S('Aluminium'),},
+	{name='platinum',			level=3,	desc=S('Platinum'),},
+	{name='pig_iron',			level=3,	desc=S('Pig Iron'),},
+	{name='wrought_iron',		level=3,	desc=S('Wrought Iron'),},
+	{name='german_silver',		level=4,	desc=S('German Silver'),	recipe={"copper","copper","copper","nickel"},},
+	{name='albata',				level=4,	desc=S('Albata'),			recipe={"copper","nickel","zinc","zinc"},},
+	{name='nickel',				level=4,	desc=S('Nickel'),},
+	{name='steel',				level=4,	desc=S('Steel'),			recipe={"wrought_iron","wrought_iron","wrought_iron","pig_iron",},},
+	{name='monel',				level=4,	desc=S('Monel'),			recipe={"nickel","nickel","nickel","copper"},},
+	{name='black_steel',		level=5,	desc=S('Black Steel'),		recipe={"steel","steel","nickel","black_bronze"},},
 }
 
 for i, metal in pairs(metals_list) do
@@ -151,49 +155,46 @@ end
 -- Ores
 
 local ore_list = {
-	[name]="lignite",			[def]={[desc]=S("Lignite"),				    },},
-	[name]="anthracite",		[def]={[desc]=S("Anthracite"),		          },},
-	[name]="bituminous_coal",	[def]={[desc]=S("Bituminous Coal"),		},},
-	[name]="magnetite",			[def]={[desc]=S("Magnetite"),		[product]='pig_iron',		},},
-	[name]="hematite",			[def]={[desc]=S("Hematite"),		[product]='pig_iron',		  },},
-	[name]="limonite",			[def]={[desc]=S("Limonite"),		[product]='pig_iron',		  },},
-	[name]="bismuthinite",		[def]={[desc]=S("Bismuthinite"),	[product]='bismuth',	      },},
-	[name]="cassiterite",		[def]={[desc]=S("Cassiterite"),		[product]='tin',        },},
-	[name]="galena",			[def]={[desc]=S("Galena"),			[product]='lead',	      },},
-	[name]="garnierite",		[def]={[desc]=S("Garnierite"),		[product]='nickel'          },},
-	[name]="malachite",			[def]={[desc]=S("Malachite"),		[product]='copper',		},},
-	[name]="native_copper",		[def]={[desc]=S("Native Copper"),	[product]='copper',	[wherein] = {"default:stone", "default:desert_stone"},     },},
-	[name]="native_gold",		[def]={[desc]=S("Native Gold"),		[product]='gold',	[wherein] = {"default:stone", "default:desert_stone"},     },},
-	[name]="native_silver",		[def]={[desc]=S("Native Silver"),	[product]='silver',	    },},
-	[name]="native_platinum",	[def]={[desc]=S("Native Platinum"),	[product]='platinum',	},},
-	[name]="sphalerite",		[def]={[desc]=S("Sphalerite"),		[product]='zinc',          },},
-	[name]="tetrahedrite",		[def]={[desc]=S("Tetrahedrite"),	[product]='copper',	      },},
-	[name]="lazurite",			[def]={[desc]=S("Lazurite"),				  },},
-	[name]="bauxite",			[def]={[desc]=S("Bauxite"),			[product]='aluminium',	    },},
-	[name]="cinnabar",			[def]={[desc]=S('Cinnabar'),				  },},
-	[name]="cryolite",			[def]={[desc]=S('Cryolite'),				  },},
-	[name]="graphite",			[def]={[desc]=S('Graphite'),				  },},
-	[name]="gypsum",			[def]={[desc]=S('Gypsum'),				      },},
-	[name]="jet",				[def]={[desc]=S('Jet'),						},},
-	[name]="kaolinite",			[def]={[desc]=S('Kaolinite'),				},},
-	[name]="kimberlite",		[def]={[desc]=S('Kimberlite'),		          },},
-	[name]="olivine",			[def]={[desc]=S('Olivine'),				    },},
-	[name]="petrified_wood",	[def]={[desc]=S('Petrified wood'),		  },},
-	[name]="pitchblende",		[def]={[desc]=S('Pitchblende'),		        },},
-	[name]="saltpeter",			[def]={[desc]=S('Saltpeter'),				},},
-	[name]="satin_spar",		[def]={[desc]=S('Satin Spar'),		          },},
-	[name]="selenite",			[def]={[desc]=S('Selenite'),				  },},
-	[name]="serpentine",		[def]={[desc]=S('Serpentine'),		          },},
-	[name]="sylvite",			[def]={[desc]=S('Sylvite'),				    },},
-	[name]="tenorite",			[def]={[desc]=S('Tenorite'),				  },},
+	{name="lignite",			def={desc=S("Lignite"),			},},
+	{name="anthracite",			def={desc=S("Anthracite"),		},},
+	{name="bituminous_coal",	def={desc=S("Bituminous Coal"),	},},
+	{name="magnetite",			def={desc=S("Magnetite"),		product='pig_iron',	},},
+	{name="hematite",			def={desc=S("Hematite"),		product='pig_iron',	},},
+	{name="limonite",			def={desc=S("Limonite"),		product='pig_iron',	},},
+	{name="bismuthinite",		def={desc=S("Bismuthinite"),	product='bismuth',	},},
+	{name="cassiterite",		def={desc=S("Cassiterite"),		product='tin',		},},
+	{name="galena",				def={desc=S("Galena"),			product='lead',		},},
+	{name="garnierite",			def={desc=S("Garnierite"),		product='nickel',	},},
+	{name="malachite",			def={desc=S("Malachite"),		product='copper',	},},
+	{name="native_copper",		def={desc=S("Native Copper"),	product='copper',	wherein = {"default:stone", "default:desert_stone"},	},},
+	{name="native_gold",		def={desc=S("Native Gold"),		product='gold',		wherein = {"default:stone", "default:desert_stone"},	},},
+	{name="native_silver",		def={desc=S("Native Silver"),	product='silver',	},},
+	{name="native_platinum",	def={desc=S("Native Platinum"),	product='platinum',	},},
+	{name="sphalerite",			def={desc=S("Sphalerite"),		product='zinc',		},},
+	{name="tetrahedrite",		def={desc=S("Tetrahedrite"),	product='copper',	},},
+	{name="lazurite",			def={desc=S("Lazurite"),		},},
+	{name="bauxite",			def={desc=S("Bauxite"),			product='aluminium',},},
+	{name="cinnabar",			def={desc=S('Cinnabar'),		},},
+	{name="cryolite",			def={desc=S('Cryolite'),		},},
+	{name="graphite",			def={desc=S('Graphite'),		},},
+	{name="gypsum",				def={desc=S('Gypsum'),			},},
+	{name="jet",				def={desc=S('Jet'),				},},
+	{name="kaolinite",			def={desc=S('Kaolinite'),		},},
+	{name="kimberlite",			def={desc=S('Kimberlite'),		},},
+	{name="olivine",			def={desc=S('Olivine'),			},},
+	{name="petrified_wood",		def={desc=S('Petrified wood'),	},},
+	{name="pitchblende",		def={desc=S('Pitchblende'),		},},
+	{name="saltpeter",			def={desc=S('Saltpeter'),		},},
+	{name="satin_spar",			def={desc=S('Satin Spar'),		},},
+	{name="selenite",			def={desc=S('Selenite'),		},},
+	{name="serpentine",			def={desc=S('Serpentine'),		},},
+	{name="sylvite",			def={desc=S('Sylvite'),			},},
+	{name="tenorite",			def={desc=S('Tenorite'),		},},
 }
 
-
-realtest.registered_ores = {}
-realtest.registered_ores_list = {}
 local d_seed = 0
 local function copytable(t)
-	t2 = {}
+	local t2 = {}
 	for k,i in pairs(t) do
 		t2[k] = i
 	end
@@ -202,16 +203,16 @@ end
 
 local function register_ore(name, OreDef)
 	local ore = {
-		name = name,
-		description = OreDef.description or S("Ore"),
-		mineral = OreDef.mineral or "minerals:"..name:remove_modname_prefix(),
+		name = "real_minerals:"..name,
+		description = OreDef.desc or S("Ore"),
+		mineral = OreDef.mineral or "real_minerals:"..name,
 		wherein = OreDef.wherein or {"default:stone"},
 		clust_scarcity = 1/(OreDef.chunks_per_volume or 1/3/3/3/2),
 		clust_size = OreDef.chunk_size or 3,
 		clust_num_ores = OreDef.ore_per_chunk or 10,
-		height_min = OreDef.height_min or -30912,
-		height_max = OreDef.height_max or 30912,
-		noise_threshhold = OreDef.noise_min or 1.2,
+		y_min = OreDef.height_min or -30912,
+		y_max = OreDef.height_max or 30912,
+		noise_threshold = OreDef.noise_min or 1.2,
 		noise_params = {offset=0, scale=1, spread={x=100, y=100, z=100}, octaves=3, persist=0.70, seed = OreDef.delta_seed or d_seed},
 		generate = true
 	}
@@ -235,15 +236,15 @@ local function register_ore(name, OreDef)
 		ore.generate = false
 	end
 	ore.particle_image = OreDef.particle_image or ore.mineral:gsub(":","_")..".png"
-	realtest.registered_ores[name] = ore
-	table.insert(realtest.registered_ores_list, name)
-	local name_ = name:gsub(":","_")
+	--realtest.registered_oresname = ore
+	--table.insert(realtest.registered_ores_list, name)
+	local name_ = "real_minerals_"..name
 	for i, wherein in ipairs(ore.wherein) do
 		local wherein_ = wherein:gsub(":","_")
 		local wherein_textures = {}
 		if minetest.registered_nodes[wherein].tiles or minetest.registered_nodes[wherein].tile_images then
 			for _, texture in ipairs(minetest.registered_nodes[wherein].tiles) do
-				table.insert(wherein_textures, texture.."^"..name_..".png")
+				table.insert(wherein_textures, texture.."^"..name_.."_ore.png")
 			end
 		else
 			wherein_textures = {name_..".png"}
@@ -269,7 +270,7 @@ local function register_ore(name, OreDef)
 		})
 		if ore.generate then
 			local oredef = copytable(ore)
-			oredef.ore = name.."_in_"..wherein_
+			oredef.ore = "real_minerals:"..name.."_in_"..wherein_
 			oredef.ore_type = "scatter"
 			oredef.wherein = wherein
 			minetest.register_ore(oredef)
@@ -278,7 +279,7 @@ local function register_ore(name, OreDef)
 end
 
 for _, ore in pairs(ore_list) do
-	register_ore("real_minerals:"..ore.name, ore.def) 
+	register_ore(ore.name, ore.def) 
 end
 
 -----------------------------------------------------------------------------------
@@ -286,10 +287,10 @@ end
 
 
 local mineral_list= {
-	{[name]='sulfur', [desc]=S('Sulfur'), },
-	{[name]='charcoal', [desc]=S('Charcoal') },
-	{[name]='flux', [desc]=S('Flux') },
-	{[name]='borax', [desc]=S('Borax') },
+	{name='sulfur', desc=S('Sulfur'), },
+	{name='charcoal', desc=S('Charcoal') },
+	{name='flux', desc=S('Flux') },
+	{name='borax', desc=S('Borax') },
 }
 
 for i, mineral in pairs(mineral_list) do
@@ -301,8 +302,8 @@ end
 
 minetest.register_node("real_minerals:sulfur_in_stone", {
 	description = S('Sulfur'),
-	tile_images = {"default_stone.png^ores_sulfur.png"},
-	particle_image = {"minerals_sulfur.png"},
+	tiles = {"default_stone.png^real_minerals_sulfur_ore.png"},
+	particle_image = {"real_minerals_sulfur_ore.png"},
 	paramtype = "light",
 	groups = {cracky=3,drop_on_dig=1,dig_immediate=2},
 	drop = {
@@ -321,8 +322,8 @@ minetest.register_node("real_minerals:sulfur_in_stone", {
 
 minetest.register_node("real_minerals:peat", {
 	description = S("Peat"),
-	tile_images = {"ores_peat.png"},
-	particle_image = {"ores_peat.png"},
+	tiles = {"real_minerals_peat_ore.png"},
+	particle_image = {"real_minerals_peat_ore.png"},
 	groups = {crumbly=3,drop_on_dig=1,falling_node=1},
 	sounds = default.node_sound_dirt_defaults(),
 })
@@ -334,8 +335,8 @@ minetest.register_ore({
 	clust_scarcity = 20*20*20,
 	clust_num_ores = 343,
 	clust_size	 = 7,
-	height_min	 = -31000,
-	height_max	 = 0,
+	y_min	 = -31000,
+	y_max	 = 0,
 })
 
 -------------------------------------------------
