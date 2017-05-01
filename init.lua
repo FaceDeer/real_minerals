@@ -57,7 +57,22 @@ for i, metal in pairs(metals_list) do
 			type = "shapeless",
 			output = "real_minerals:"..metal.name.."_ingot "..tostring(quantity),
 			recipe = recipe_list,
-		})	
+		})
+		
+		if  minetest.get_modpath("crafting") then
+			
+			local input = {}
+			for _, item in pairs(metal.recipe) do
+				input["real_minerals:"..item.."_ingot"] = (input["real_minerals:"..item.."_ingot"] or 0) + 1
+			end
+			
+			crafting.register("smelter", {
+				input = input,
+				output = {["real_minerals:"..metal.name.."_ingot"] = quantity},
+				time = 3.0,
+				fuel_grade = {min=1, max=3}
+			})
+		end
 	end
 	
 	
@@ -255,16 +270,16 @@ local function register_ore(name, OreDef)
 			particle_image = {ore.particle_image},
 			groups = {cracky=3,drop_on_dig=1,ore=1,dropping_like_stone=1},
 			drop = {
-					max_items = 1,
-					items = {
-							{
-									items = {ore.mineral.." 2"},
-									rarity = 2
-							},
-							{
-									items = {ore.mineral}
-							}
+				max_items = 1,
+				items = {
+					{
+						items = {ore.mineral.." 2"},
+						rarity = 2
+					},
+					{
+						items = {ore.mineral}
 					}
+				}
 			},
 			sounds = default.node_sound_stone_defaults()
 		})
