@@ -59,18 +59,17 @@ for i, metal in pairs(metals_list) do
 			recipe = recipe_list,
 		})
 		
-		if  minetest.get_modpath("crafting") then
+		if  minetest.get_modpath("crafting_lib") then
 			
 			local input = {}
 			for _, item in pairs(metal.recipe) do
 				input["real_minerals:"..item.."_ingot"] = (input["real_minerals:"..item.."_ingot"] or 0) + 1
 			end
 			
-			crafting.register("smelter", {
+			crafting_lib.register("smelter", {
 				input = input,
 				output = {["real_minerals:"..metal.name.."_ingot"] = quantity},
-				time = 3.0,
-				fuel_grade = {min=1, max=3}
+				cooktime = 3.0,
 			})
 		end
 	end
@@ -242,8 +241,16 @@ local function register_ore(name, OreDef)
 			type = "cooking",
 			output = "real_minerals:"..OreDef.product.."_ingot",
 			recipe = "real_minerals:"..name,
-			cooktime = 5,
+			time = 5,
 		})
+
+		if  minetest.get_modpath("crafting_lib") then
+			crafting_lib.register("smelter", {
+				input = {["real_minerals:"..name] = 1},
+				output = {["real_minerals:"..OreDef.product.."_ingot"] = 1},
+				cooktime = 3.0,
+			})
+		end
 	end
 	
 	d_seed = d_seed + 1
