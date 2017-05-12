@@ -40,6 +40,7 @@ for i, metal in pairs(metals_list) do
 		
 	minetest.register_craftitem("real_minerals:"..metal.name.."_ingot", {
 		description = S('@1 Ingot', metal.desc),
+		groups = {metal_ingot = 1},
 		inventory_image = "real_minerals_metal_"..metal.name.."_ingot.png",
 	})
 
@@ -52,13 +53,7 @@ for i, metal in pairs(metals_list) do
 		for _, input in pairs(metal.recipe) do
 			table.insert(recipe_list, "real_minerals:"..input.."_ingot")
 		end
-		
-		minetest.register_craft({
-			type = "shapeless",
-			output = "real_minerals:"..metal.name.."_ingot "..tostring(quantity),
-			recipe = recipe_list,
-		})
-		
+				
 		if  minetest.get_modpath("crafting_lib") then
 			
 			local input = {}
@@ -70,6 +65,12 @@ for i, metal in pairs(metals_list) do
 				input = input,
 				output = {["real_minerals:"..metal.name.."_ingot"] = quantity},
 				cooktime = 3.0,
+			})
+		else
+			minetest.register_craft({
+				type = "shapeless",
+				output = "real_minerals:"..metal.name.."_ingot "..tostring(quantity),
+				recipe = recipe_list,
 			})
 		end
 	end
@@ -237,18 +238,18 @@ local function register_ore(name, OreDef)
 	})
 	
 	if OreDef.product then
-		minetest.register_craft({
-			type = "cooking",
-			output = "real_minerals:"..OreDef.product.."_ingot",
-			recipe = "real_minerals:"..name,
-			time = 5,
-		})
-
 		if  minetest.get_modpath("crafting_lib") then
 			crafting_lib.register("smelter", {
 				input = {["real_minerals:"..name] = 1},
 				output = {["real_minerals:"..OreDef.product.."_ingot"] = 1},
-				cooktime = 3.0,
+				cooktime = 5,
+			})
+		else
+			minetest.register_craft({
+				type = "cooking",
+				output = "real_minerals:"..OreDef.product.."_ingot",
+				recipe = "real_minerals:"..name,
+				time = 5,
 			})
 		end
 	end
