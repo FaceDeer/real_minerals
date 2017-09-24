@@ -131,3 +131,22 @@ real_minerals_tenorite_mineral.png
 real_minerals_tenorite_ore.png
 real_minerals_tetrahedrite_mineral.png
 real_minerals_tetrahedrite_ore.png
+
+
+The following are from the default mod:
+
+real_minerals_obsidian.png
+real_minerals_sandstone.png
+
+The following are new for this mod:
+
+
+real_minerals_basalt.png
+real_minerals_granite.png
+real_minerals_limestone.png
+real_minerals_marble.png
+real_minerals_quartzite.png
+real_minerals_shale_top.png
+real_minerals_shale_side.png
+real_minerals_slate_top.png
+real_minerals_slate_side.png
