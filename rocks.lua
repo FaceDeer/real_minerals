@@ -2,8 +2,6 @@
 local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
-local picks = {"default:pick_wood", "default:pick_stone", "default:pick_steel", "default:pick_bronze", "default:pick_mese", "default:pick_diamond", }
-
 local stone_types =
 {
 	{name="limestone", desc=S("Limestone")},
@@ -54,12 +52,11 @@ local register_rock = function(rock_def)
 			max_items = 1,
 			items = { -- Choose max_items randomly from this list.
 				{
-					items = {"real_minerals:"..rock_def.name.."_cobble"},  -- Items to drop.
-					tools = picks
-				},
-				{
 					items = {"real_minerals:"..rock_def.name.."_block"},  -- Items to drop.
 					tools = {"real_minerals:stone_splitting_wedge"}
+				},
+				{
+					items = {"real_minerals:"..rock_def.name.."_cobble"},  -- Items to drop.
 				},
 			},
 		},
@@ -101,11 +98,10 @@ for _, rock in pairs(stone_types) do
 	register_rock(rock) 
 end
 
-local USES = 200
-
 minetest.register_tool("real_minerals:stone_splitting_wedge", {
 	description = S("Wedge and Shim Set"),
 	inventory_image = "real_minerals_splitting_wedge.png",
+	stack_max = 1,
 	tool_capabilities = {
 		full_punch_interval = 1.0,
 		max_drop_level=1,
