@@ -137,6 +137,7 @@ The following are from the default mod:
 
 real_minerals_obsidian.png
 real_minerals_sandstone.png
+real_minerals_overlay_cobble.png
 
 The following are new for this mod:
 
@@ -150,3 +151,6 @@ real_minerals_shale_top.png
 real_minerals_shale_side.png
 real_minerals_slate_top.png
 real_minerals_slate_side.png
+real_minerals_overlay_brick.png
+real_minerals_overlay_block.png
+real_minerals_splitting_wedge.png
