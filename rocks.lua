@@ -2,6 +2,8 @@
 local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
+local picks = {"default:pick_wood", "default:pick_stone", "default:pick_steel", "default:pick_bronze", "default:pick_mese", "default:pick_diamond", }
+
 local stone_types =
 {
 	{name="limestone", desc=S("Limestone")},
@@ -47,9 +49,21 @@ local register_rock = function(rock_def)
 		tiles = tiles,
 		is_ground_content = true,
 		groups = {cracky=3,drop_on_dig=1},
-		drop = "real_minerals:"..rock_def.name.."_cobble",
+		
+		drop = {
+			max_items = 1,
+			items = { -- Choose max_items randomly from this list.
+				{
+					items = {"real_minerals:"..rock_def.name.."_cobble"},  -- Items to drop.
+					tools = picks
+				},
+				{
+					items = {"real_minerals:"..rock_def.name.."_block"},  -- Items to drop.
+					tools = {"real_minerals:stone_splitting_wedge"}
+				},
+			},
+		},
 		sounds = default.node_sound_stone_defaults(),
-		_real_minerals_drop_on_wedge = "real_minerals:"..rock_def.name.."_block",
 	})
 
 	minetest.register_node("real_minerals:"..rock_def.name.."_cobble", {
@@ -92,34 +106,13 @@ local USES = 200
 minetest.register_tool("real_minerals:stone_splitting_wedge", {
 	description = S("Wedge and Shim Set"),
 	inventory_image = "real_minerals_splitting_wedge.png",
-	stack_max = 1,
 	tool_capabilities = {
 		full_punch_interval = 1.0,
+		max_drop_level=1,
 		groupcaps={
 			cracky = {times={[1]=4.00, [2]=1.60, [3]=0.80}, uses=20, maxlevel=2},
 		},
+		damage_groups = {fleshy=4},
 	},
-	sound = {
-            breaks = "default_tool_break",
-		},
-	on_use = function (itemstack, user, pointed_thing)
-        local pos = minetest.get_pointed_thing_position(pointed_thing, above)
-        local node = minetest.env:get_node(pos)
-		local node_ref = minetest.registered_nodes[node.name]
-		if node_ref._real_minerals_drop_on_wedge then
-			minetest.dig_node(pos)
-			local leftover = user:get_inventory():add_item("main", node_ref._real_minerals_drop_on_wedge)
-			if leftover and leftover:get_count() > 0 then
-				minetest.add_item(pos, node_ref._real_minerals_drop_on_wedge)
-			end
-		end
-	end,
-
-	after_use = function(itemstack, user, node, digparams)
-		--minetest.sound_play("vines_shears", {pos=user:getpos()})
-		if not minetest.settings:get_bool("creative_mode") then
-			itemstack:add_wear(65535/(USES-1))
-		end
-		return itemstack
-	end,	
+	sound = {breaks = "default_tool_breaks"},
 })
