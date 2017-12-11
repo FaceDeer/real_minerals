@@ -1,0 +1,2 @@
+# Enables mapgen code that replaces default stone with a variety of real stone types
+real_minerals_replace_default_stone (Replace default stone) bool true

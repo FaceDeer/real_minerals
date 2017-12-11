@@ -50,7 +50,7 @@ local register_rock = function(rock_def)
 		
 		drop = {
 			max_items = 1,
-			items = { -- Choose max_items randomly from this list.
+			items = {
 				{
 					items = {"real_minerals:"..rock_def.name.."_block"},  -- Items to drop.
 					tools = {"real_minerals:stone_splitting_wedge"}
