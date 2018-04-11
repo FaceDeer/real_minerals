@@ -201,12 +201,25 @@ local function register_ore(name, OreDef)
 			wherein_textures = {name_..".png"}
 		end
 		
+		local block_textures = {}
+		for _, wherein_texture in ipairs(wherein_textures) do
+			table.insert(block_textures, wherein_texture.."^real_minerals_overlay_block.png")
+		end
+		
 		if real_minerals.config.replace_default_stone then
 			
 		else
 			
 		end
 
+		--Define a "block" form of this ore
+		minetest.register_node("real_minerals:"..name.."_in_"..wherein_.."_block", {
+			description = S("@1 Block", ore.description),
+			tiles = block_textures,
+			is_ground_content = true,
+			groups = {cracky=3,drop_on_dig=1},
+			sounds = default.node_sound_stone_defaults(),
+		})
 		
 		minetest.register_node("real_minerals:"..name.."_in_"..wherein_, {
 			description = S("@1 Ore", ore.description),
@@ -217,16 +230,42 @@ local function register_ore(name, OreDef)
 				max_items = 1,
 				items = {
 					{
+						--If the player uses a splitting wedge, give them a block of ore
+						items = {"real_minerals:"..name.."_in_"..wherein_.."_block"},
+						tools = {"real_minerals:stone_splitting_wedge"}
+					},
+					{
+						--Else they have a 25% chance of getting a mineral lump and a cobble block
 						items = {ore.mineral, wherein.."_cobble"},
 						rarity = 4
 					},
 					{
+						--Else just give them cobble, no mineral lump
 						items = {wherein.."_cobble"}
 					}
 				}
 			},
 			sounds = default.node_sound_stone_defaults()
 		})
+		
+		--Allow four blocks to be broken down into four cobble and one mineral lump
+		minetest.register_craft({
+			type = "shapeless",
+			output = ore.mineral,
+			recipe = {
+				"real_minerals:"..name.."_in_"..wherein_.."_block",
+				"real_minerals:"..name.."_in_"..wherein_.."_block",
+				"real_minerals:"..name.."_in_"..wherein_.."_block",
+				"real_minerals:"..name.."_in_"..wherein_.."_block"
+			},
+			replacements = {
+				{"real_minerals:"..name.."_in_"..wherein_.."_block", wherein.."_cobble"},
+				{"real_minerals:"..name.."_in_"..wherein_.."_block", wherein.."_cobble"},
+				{"real_minerals:"..name.."_in_"..wherein_.."_block", wherein.."_cobble"},
+				{"real_minerals:"..name.."_in_"..wherein_.."_block", wherein.."_cobble"}
+			}
+		})
+		
 		if ore.generate then
 			local oredef = copytable(ore)
 			oredef.ore = "real_minerals:"..name.."_in_"..wherein_

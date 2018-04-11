@@ -11,6 +11,8 @@ local perlin_metamorph = {
 	persist = 0.67
 }
 
+local water_level = tonumber(minetest.get_mapgen_setting("water_level"))
+
 local nobj_metamorph = nil
 
 minetest.register_on_generated(function(minp, maxp, seed)
@@ -41,7 +43,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local minposxz = {x = x_min, y = z_min} --2D bottom corner
 	
 	nobj_metamorph = nobj_metamorph or minetest.get_perlin_map(perlin_metamorph, chunk_lengths)
-	local nvals_metamorph = nobj_cave:get3dMap_flat(minposxyz, nvals_metamorph_buffer)
+	local nvals_metamorph = nobj_metamorph:get3dMap_flat(minposxyz, nvals_metamorph_buffer)
 
 	local index_3d = 1 --3D node index
 	local index_2d = 1 --2D node index
