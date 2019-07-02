@@ -5,7 +5,9 @@ local S, NS = dofile(MP.."/intllib.lua")
 -------------------------------------------------------
 -- Ores
 
-local sedimentary = {"real_minerals:limestone", "real_minerals:sandstone", "real_minerals:shale"}
+real_minerals.contains_ore = {}
+
+local sedimentary = {"real_minerals:limestone", "real_minerals:sandstone", "real_minerals:desert_sandstone", "real_minerals:silver_sandstone", "real_minerals:shale"}
 local igneous = {"real_minerals:granite", "real_minerals:basalt", "real_minerals:obsidian"}
 local metamorphic = {"real_minerals:marble", "real_minerals:quartzite", "real_minerals:slate"}
 
@@ -20,95 +22,166 @@ function jointables(t1, t2)
 	return newTable
 end
 
+function vein(stratum_rand, field, offset, width, rarity)
+	return math.abs(field) < width and stratum_rand > offset and stratum_rand < offset+(rarity*4)
+end
+function blob(stratum_rand, field, offset, size, rarity)
+	return math.abs(field) > size and stratum_rand > offset and stratum_rand < offset+(rarity*4)
+end
+
+local standard_vein_width = 0.05
+
+
+minetest.register_craft({
+	output = 'default:torch 4',
+	recipe = {
+		{'real_minerals:bituminous_coal'},
+		{'group:stick'},
+	}
+})
+
 local ore_list = {
 	{name="lignite", def={
 		desc=S("Lignite"),
 		wherein = sedimentary,
+		place = function(stratum_rand, field)
+			return vein(stratum_rand, field, 0, standard_vein_width, 0.01)
+		end,
+		ore_rarity = 2,
 	},},
-	{name="anthracite",	def={
-		desc=S("Anthracite"),
-		wherein = sedimentary,
-	},},
+--	{name="anthracite",	def={
+--		desc=S("Anthracite"),
+--		wherein = sedimentary,
+--	},},
 	{name="bituminous_coal", def={
 		desc=S("Bituminous Coal"),
 		wherein = sedimentary,
+		place = function(stratum_rand, field)
+			return blob(stratum_rand, field, 0.1, 0.5, 0.02) and math.random() > 0.05
+		end,
+		ore_rarity = 1,
 	},},
 	{name="magnetite", def={
 		desc=S("Magnetite"),
 		product='pig_iron',
 		wherein = sedimentary,
+		place = function(stratum_rand, field)
+			return blob(stratum_rand, field, 0.2, 0.6, 0.01)
+		end,
 	},},
 	{name="hematite", def={
 		desc=S("Hematite"),
 		product='pig_iron',
 		wherein = jointables(sedimentary, igneous),
+		place = function(stratum_rand, field)
+			return vein(stratum_rand, field, 0.3, standard_vein_width, 0.01)
+		end,
 	},},
 	{name="limonite", def={
 		desc=S("Limonite"),
 		product='pig_iron',
 		wherein = sedimentary,
+		place = function(stratum_rand, field)
+			vein(stratum_rand, field, 0.4, standard_vein_width, 0.01)
+		end,
 	},},
 	{name="bismuthinite", def={
 		desc=S("Bismuthinite"),
 		product='bismuth',
 		wherein={"real_minerals:granite"},
+		place = function(stratum_rand, field)
+			return blob(stratum_rand, field, 0.5, 0.75, 0.01)
+		end,
 	},},
 	{name="cassiterite", def={
 		desc=S("Cassiterite"),
 		product='tin',
 		wherein={"real_minerals:granite"},
+		place = function(stratum_rand, field)
+			return vein(stratum_rand, field, 0.6, standard_vein_width, 0.005)
+		end,
 	},},
 	{name="galena", def={
 		desc=S("Galena"),
 		product='lead',
-		wherein=jointables(igneous, jointables(metamorphic, {"real_minerals:limestone"}))
+		wherein=jointables(igneous, jointables(metamorphic, {"real_minerals:limestone"})),
+		place = function(stratum_rand, field)
+			return vein(stratum_rand, field, 0.7, standard_vein_width, 0.005)
+		end,
 	},},
 	{name="garnierite", def={
 		desc=S("Garnierite"),
 		product='nickel',
 		wherein={"real_minerals:granite"}, -- should be gabbro, granite's close enough
+		place = function(stratum_rand, field)
+			return vein(stratum_rand, field, 0.8, standard_vein_width, 0.005)
+		end,
 	},},
 	{name="malachite", def={
 		desc=S("Malachite"),
 		product='copper',
 		wherein={"real_minerals:limestone", "real_minerals:marble"}, 
+		place = function(stratum_rand, field)
+			return vein(stratum_rand, field, 0.9, standard_vein_width, 0.015)
+		end,
 	},},
 	{name="native_copper", def={
 		desc=S("Native Copper"),
 		product='copper',
 		wherein_default = {"default:stone", "default:desert_stone"},
-		wherein = jointables(igneous, {"real_minerals:sandstone"})
+		wherein = jointables(igneous, {"real_minerals:sandstone", "real_minerals:desert_sandstone", "real_minerals:silver_sandstone"}),
+		place = function(stratum_rand, field)
+			return blob(stratum_rand, field, 0.05, 0.7, 0.01)
+		end,
 	},},
 	{name="native_gold", def={
 		desc=S("Native Gold"),
 		product='gold',
 		wherein_default = {"default:stone", "default:desert_stone"},
 		wherein = igneous,
+		place = function(stratum_rand, field)
+			return blob(stratum_rand, field, 0.15, 0.75, 0.0025)
+		end,
 	},},
 	{name="native_silver", def={
 		desc=S("Native Silver"),
 		product='silver',
 		wherein={"real_minerals:granite"},
+		place = function(stratum_rand, field)
+			return blob(stratum_rand, field, 0.25, 0.75, 0.005)
+		end,
 	},},
 	{name="native_platinum", def={
 		desc=S("Native Platinum"),
 		product='platinum',
 		wherein=sedimentary, -- actually in magnetite, olivine, chromite
+		place = function(stratum_rand, field)
+			return blob(stratum_rand, field, 0.35, 0.85, 0.01)
+		end,
 	},},
 	{name="sphalerite", def={
 		desc=S("Sphalerite"),
 		product='zinc',
 		wherein=metamorphic,
+		place = function(stratum_rand, field)
+			return vein(stratum_rand, field, 0.45, standard_vein_width, 0.005)
+		end,
 	},},
 	{name="tetrahedrite", def={
 		desc=S("Tetrahedrite"),
 		product='copper',
-		wherein=jointables(sedimentary, jointables(igneous, metamorphic))
+		wherein=jointables(sedimentary, jointables(igneous, metamorphic)),
+		place = function(stratum_rand, field)
+			return vein(stratum_rand, field, 0.55, standard_vein_width, 0.015)
+		end,
 	},},
 	{name="bauxite", def={
 		desc=S("Bauxite"),
 		product='aluminium',
 		wherein=sedimentary,
+		place = function(stratum_rand, field)
+			return blob(stratum_rand, field, 0.65, 0.6, 0.01)
+		end,
 	},},
 --	{name="lazurite", 			def={desc=S("Lazurite"),		},},
 --	{name="cinnabar", 			def={desc=S('Cinnabar'),		},},
@@ -129,11 +202,34 @@ local ore_list = {
 --	{name="tenorite",			def={desc=S('Tenorite'),		},},
 }
 
+local other_ores =
+{
+	{
+		name = "real_minerals:obsidian",
+		wherein = {"real_minerals:basalt"},
+		place = function(stratum_rand, field)
+			return blob(stratum_rand, field, 0, 0.5, 0.02) and math.random() > 0.05
+		end,
+	},
+	{
+		name = "default:clay",
+		wherein = sedimentary,
+		place = function(stratum_rand, field)
+			return blob(stratum_rand, field, 0.95, 0.5, 0.02) and math.random() > 0.05
+		end,
+	},
+}
+
+
 local d_seed = 0
 local function copytable(t)
 	local t2 = {}
 	for k,i in pairs(t) do
-		t2[k] = i
+		if type(i) == "table" then
+			t2[k] = copytable(i)
+		else
+			t2[k] = i
+		end
 	end
 	return t2
 end
@@ -221,6 +317,8 @@ local function register_ore(name, OreDef)
 			sounds = default.node_sound_stone_defaults(),
 		})
 		
+		local ore_rarity = OreDef.ore_rarity or 4
+		
 		minetest.register_node("real_minerals:"..name.."_in_"..wherein_, {
 			description = S("@1 Ore", ore.description),
 			tiles = wherein_textures,
@@ -237,7 +335,7 @@ local function register_ore(name, OreDef)
 					{
 						--Else they have a 25% chance of getting a mineral lump and a cobble block
 						items = {ore.mineral, wherein.."_cobble"},
-						rarity = 4
+						rarity = ore_rarity
 					},
 					{
 						--Else just give them cobble, no mineral lump
@@ -248,22 +346,20 @@ local function register_ore(name, OreDef)
 			sounds = default.node_sound_stone_defaults()
 		})
 		
-		--Allow four blocks to be broken down into four cobble and one mineral lump
+		--Allow blocks to be broken down into cobble and one mineral lump
+		local recipe = {}
+		for i = 1, ore_rarity do
+			table.insert(recipe, "real_minerals:"..name.."_in_"..wherein_.."_block")
+		end
+		local replacements = {}
+		for i = 1, ore_rarity do
+			table.insert(replacements, {"real_minerals:"..name.."_in_"..wherein_.."_block", wherein.."_cobble"})
+		end		
 		minetest.register_craft({
 			type = "shapeless",
 			output = ore.mineral,
-			recipe = {
-				"real_minerals:"..name.."_in_"..wherein_.."_block",
-				"real_minerals:"..name.."_in_"..wherein_.."_block",
-				"real_minerals:"..name.."_in_"..wherein_.."_block",
-				"real_minerals:"..name.."_in_"..wherein_.."_block"
-			},
-			replacements = {
-				{"real_minerals:"..name.."_in_"..wherein_.."_block", wherein.."_cobble"},
-				{"real_minerals:"..name.."_in_"..wherein_.."_block", wherein.."_cobble"},
-				{"real_minerals:"..name.."_in_"..wherein_.."_block", wherein.."_cobble"},
-				{"real_minerals:"..name.."_in_"..wherein_.."_block", wherein.."_cobble"}
-			}
+			recipe = recipe,
+			replacements = replacements,
 		})
 		
 		if ore.generate then
@@ -273,8 +369,26 @@ local function register_ore(name, OreDef)
 			oredef.wherein = wherein
 			minetest.register_ore(oredef)
 		end
+		
+		c_wherein = minetest.get_content_id(wherein)
+		c_ore = minetest.get_content_id("real_minerals:"..name.."_in_"..wherein_)
+		local contains_ore = real_minerals.contains_ore[c_wherein] or {}
+		real_minerals.contains_ore[c_wherein] = contains_ore
+		table.insert(contains_ore, {place = OreDef.place, ore = c_ore})
 	end
 end
+
+for k, ore in pairs(other_ores) do
+	for kk, wherein in pairs(ore.wherein) do
+		c_wherein = minetest.get_content_id(wherein)
+		c_ore = minetest.get_content_id(ore.name)
+		local contains_ore = real_minerals.contains_ore[c_wherein] or {}
+		real_minerals.contains_ore[c_wherein] = contains_ore
+		table.insert(contains_ore, {place = ore.place, ore = c_ore})
+	end
+end
+
+minetest.clear_registered_ores()
 
 for _, ore in pairs(ore_list) do
 	register_ore(ore.name, ore.def) 

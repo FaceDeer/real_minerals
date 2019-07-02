@@ -6,9 +6,12 @@ local stone_types =
 {
 	{name="limestone", desc=S("Limestone")},
 	{name="sandstone", desc=S("Sandstone")},
+	{name="desert_sandstone", desc=S("Sandstone")},
+	{name="silver_sandstone", desc=S("Sandstone")},
 	{name="shale", desc=S("Shale"), dark=true, tiles={"real_minerals_shale_top.png", "real_minerals_shale_side.png"}},
 	{name="granite", desc=S("Granite")},
 	{name="basalt", desc=S("Basalt"), dark=true},
+	{name="rhyolite", desc=S("Rhyolite")},
 	{name="obsidian", desc=S("Obsidian"), dark=true},
 	{name="marble", desc=S("Marble")},
 	{name="quartzite", desc=S("Quartzite")},
@@ -46,7 +49,7 @@ local register_rock = function(rock_def)
 		description = rock_def.desc,
 		tiles = tiles,
 		is_ground_content = true,
-		groups = {cracky=3,drop_on_dig=1},
+		groups = {cracky=3,drop_on_dig=1,stone=1},
 		
 		drop = {
 			max_items = 1,
@@ -67,7 +70,7 @@ local register_rock = function(rock_def)
 		description = S("@1 Cobble", rock_def.desc),
 		tiles = cobble_tiles,
 		is_ground_content = true,
-		groups = {cracky=3,drop_on_dig=1},
+		groups = {cracky=3,drop_on_dig=1,stone=1},
 		sounds = default.node_sound_stone_defaults(),
 	})
 
@@ -75,7 +78,7 @@ local register_rock = function(rock_def)
 		description = S("@1 Brick", rock_def.desc),
 		tiles = brick_tiles,
 		is_ground_content = true,
-		groups = {cracky=3,drop_on_dig=1},
+		groups = {cracky=3,drop_on_dig=1,stone=1},
 		sounds = default.node_sound_stone_defaults(),
 	})
 	
@@ -83,7 +86,7 @@ local register_rock = function(rock_def)
 		description = S("@1 Block", rock_def.desc),
 		tiles = block_tiles,
 		is_ground_content = true,
-		groups = {cracky=3,drop_on_dig=1},
+		groups = {cracky=3,drop_on_dig=1,stone=1},
 		sounds = default.node_sound_stone_defaults(),
 	})
 	
@@ -98,6 +101,8 @@ for _, rock in pairs(stone_types) do
 	register_rock(rock) 
 end
 
+local USES = 200
+
 minetest.register_tool("real_minerals:stone_splitting_wedge", {
 	description = S("Wedge and Shim Set"),
 	inventory_image = "real_minerals_splitting_wedge.png",
@@ -110,5 +115,15 @@ minetest.register_tool("real_minerals:stone_splitting_wedge", {
 		},
 		damage_groups = {fleshy=4},
 	},
+	after_use = function(itemstack, user, node, digparams)
+		--minetest.sound_play("vines_shears", {pos=user:getpos()})
+		minetest.debug("splitter after_use params")
+		minetest.debug(dump(node))
+		minetest.debug(dump(digparams))
+		if not minetest.settings:get_bool("creative_mode") then
+			itemstack:add_wear(digparams.wear)
+		end
+		return itemstack
+	end,
 	sound = {breaks = "default_tool_breaks"},
 })
