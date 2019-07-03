@@ -1,9 +1,9 @@
-local global_multiplier = 10
+local global_multiplier = 2000
 
 mapgen_helper.register_perlin("real_minerals:metamorphic_boundary", {
 	offset = 0,
 	scale = 1,
-	spread = {x=256*global_multiplier, y=256*global_multiplier, z=256*global_multiplier},
+	spread = {x=1*global_multiplier, y=1*global_multiplier, z=1*global_multiplier},
 	seed = -400090,
 	octaves = 3,
 	persist = 0.67
@@ -12,7 +12,7 @@ mapgen_helper.register_perlin("real_minerals:metamorphic_boundary", {
 mapgen_helper.register_perlin("real_minerals:igneous_boundary", {
 	offset = 0,
 	scale = 1,
-	spread = {x=256*global_multiplier, y=256*global_multiplier, z=256*global_multiplier},
+	spread = {x=1*global_multiplier, y=1*global_multiplier, z=1*global_multiplier},
 	seed = 105510,
 	octaves = 3,
 	persist = 0.67
@@ -21,7 +21,7 @@ mapgen_helper.register_perlin("real_minerals:igneous_boundary", {
 mapgen_helper.register_perlin("real_minerals:sedimentary_strata", {
 	offset = 0,
 	scale = 1,
-	spread = {x=256*global_multiplier, y=256*global_multiplier, z=256*global_multiplier},
+	spread = {x=1*global_multiplier, y=1*global_multiplier, z=1*global_multiplier},
 	seed = -10510,
 	octaves = 3,
 	persist = 0.67
@@ -30,7 +30,7 @@ mapgen_helper.register_perlin("real_minerals:sedimentary_strata", {
 mapgen_helper.register_perlin("real_minerals:metamorphic_type", {
 	offset = 0,
 	scale = 1,
-	spread = {x=256*global_multiplier, y=128*global_multiplier, z=256*global_multiplier},
+	spread = {x=0.5*global_multiplier, y=0.25*global_multiplier, z=0.5*global_multiplier},
 	seed = 399523,
 	octaves = 3,
 	persist = 0.67
@@ -39,7 +39,7 @@ mapgen_helper.register_perlin("real_minerals:metamorphic_type", {
 mapgen_helper.register_perlin("real_minerals:igneous_type", {
 	offset = 0,
 	scale = 1,
-	spread = {x=256*global_multiplier, y=128*global_multiplier, z=256*global_multiplier},
+	spread = {x=0.5*global_multiplier, y=0.25*global_multiplier, z=0.5*global_multiplier},
 	seed = -7722345,
 	octaves = 3,
 	persist = 0.67
@@ -48,7 +48,7 @@ mapgen_helper.register_perlin("real_minerals:igneous_type", {
 mapgen_helper.register_perlin("real_minerals:sedimentary_type", {
 	offset = 0,
 	scale = 1,
-	spread = {x=256*global_multiplier, y=128*global_multiplier, z=256*global_multiplier},
+	spread = {x=0.5*global_multiplier, y=0.25*global_multiplier, z=0.5*global_multiplier},
 	seed = 9955553,
 	octaves = 3,
 	persist = 0.67
@@ -64,11 +64,11 @@ local ore_field_perlin = {
 }
 mapgen_helper.register_perlin("real_minerals:ore_field", ore_field_perlin)
 
-local metamorphic_scale = 100*global_multiplier
-local strata_scale = 100*global_multiplier
+local metamorphic_scale = 2*global_multiplier
+local strata_scale = 0.25*global_multiplier
 
-local igneous_scale = 100*global_multiplier
-local igneous_displace = -100*global_multiplier
+local igneous_scale = 2*global_multiplier
+local igneous_displace = -2*global_multiplier
 
 --local water_level = tonumber(minetest.get_mapgen_setting("water_level"))
 
@@ -79,7 +79,8 @@ local base_stone = {[c_stone] = true, [c_default_sandstone] = true, [c_desertsto
 
 local c_air = minetest.get_content_id("air")
 
-local c_limestone = minetest.get_content_id("real_minerals:limestone")
+local c_limestone_1 = minetest.get_content_id("real_minerals:limestone")
+local c_limestone_2 = minetest.get_content_id("real_minerals:limestone_light")
 local c_sandstone_1 = minetest.get_content_id("real_minerals:sandstone")
 local c_sandstone_2 = minetest.get_content_id("real_minerals:desert_sandstone")
 local c_sandstone_3 = minetest.get_content_id("real_minerals:silver_sandstone")
@@ -91,6 +92,7 @@ local c_slate = minetest.get_content_id("real_minerals:slate")
 
 local c_basalt = minetest.get_content_id("real_minerals:basalt")
 local c_granite = minetest.get_content_id("real_minerals:granite")
+local c_gabbro = minetest.get_content_id("real_minerals:gabbro")
 local c_obsidian = minetest.get_content_id("real_minerals:obsidian")
 
 local c_glass = minetest.get_content_id("default:glass") -- for ore testing
@@ -99,7 +101,7 @@ local generated_nodes = {}
 
 local debug_slice = false
 
-minetest.register_on_generated(function(minp, maxp, seed)
+real_minerals.mapgen = function(minp, maxp, seed)
 	local met_bound = mapgen_helper.perlin2d("real_minerals:metamorphic_boundary", minp, maxp)
 	local ign_bound = mapgen_helper.perlin2d("real_minerals:igneous_boundary", minp, maxp)
 	local sed_strata = mapgen_helper.perlin2d("real_minerals:sedimentary_strata", minp, maxp)
@@ -137,8 +139,10 @@ minetest.register_on_generated(function(minp, maxp, seed)
 			data[vi] = c_air		
 		elseif base_stone[data[vi]] then
 			if y < ign_bound_value then
-				if ign_type_value < 0 then
+				if ign_type_value < -0.25 then
 					data[vi] = c_basalt
+				elseif ign_type_value < 0.25 then
+					data[vi] = c_gabbro
 				else
 					data[vi] = c_granite
 				end
@@ -152,7 +156,11 @@ minetest.register_on_generated(function(minp, maxp, seed)
 				end				
 			else
 				if sed_type_value < -0.25 then
-					data[vi] = c_limestone
+					if sed_strata_value < 2/3 then
+						data[vi] = c_limestone_1
+					else
+						data[vi] = c_limestone_2
+					end
 				elseif sed_type_value < 0.25 then
 					if sed_strata_value < 1/3 then
 						data[vi] = c_sandstone_1
@@ -195,7 +203,9 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	
 	vm:write_to_map()
 
-end)
+end
+
+minetest.register_on_generated(real_minerals.mapgen)
 
 minetest.register_craftitem("real_minerals:prospector", {
 	description = "Prospector",

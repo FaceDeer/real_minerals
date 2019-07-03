@@ -5,12 +5,14 @@ local S, NS = dofile(MP.."/intllib.lua")
 local stone_types =
 {
 	{name="limestone", desc=S("Limestone")},
+	{name="limestone_light", desc=S("Limestone")},
 	{name="sandstone", desc=S("Sandstone")},
 	{name="desert_sandstone", desc=S("Sandstone")},
 	{name="silver_sandstone", desc=S("Sandstone")},
 	{name="shale", desc=S("Shale"), dark=true, tiles={"real_minerals_shale_top.png", "real_minerals_shale_side.png"}},
 	{name="granite", desc=S("Granite")},
 	{name="basalt", desc=S("Basalt"), dark=true},
+	{name="gabbro", desc=S("Gabbro")},
 	{name="rhyolite", desc=S("Rhyolite")},
 	{name="obsidian", desc=S("Obsidian"), dark=true},
 	{name="marble", desc=S("Marble")},

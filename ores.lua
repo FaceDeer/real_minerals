@@ -7,8 +7,8 @@ local S, NS = dofile(MP.."/intllib.lua")
 
 real_minerals.contains_ore = {}
 
-local sedimentary = {"real_minerals:limestone", "real_minerals:sandstone", "real_minerals:desert_sandstone", "real_minerals:silver_sandstone", "real_minerals:shale"}
-local igneous = {"real_minerals:granite", "real_minerals:basalt", "real_minerals:obsidian"}
+local sedimentary = {"real_minerals:limestone", "real_minerals:limestone_light", "real_minerals:sandstone", "real_minerals:desert_sandstone", "real_minerals:silver_sandstone", "real_minerals:shale"}
+local igneous = {"real_minerals:granite", "real_minerals:basalt", "real_minerals:gabbro"}
 local metamorphic = {"real_minerals:marble", "real_minerals:quartzite", "real_minerals:slate"}
 
 function jointables(t1, t2)
@@ -104,7 +104,7 @@ local ore_list = {
 	{name="galena", def={
 		desc=S("Galena"),
 		product='lead',
-		wherein=jointables(igneous, jointables(metamorphic, {"real_minerals:limestone"})),
+		wherein=jointables(igneous, jointables(metamorphic, {"real_minerals:limestone", "real_minerals:limestone_light"})),
 		place = function(stratum_rand, field)
 			return vein(stratum_rand, field, 0.7, standard_vein_width, 0.005)
 		end,
@@ -120,7 +120,7 @@ local ore_list = {
 	{name="malachite", def={
 		desc=S("Malachite"),
 		product='copper',
-		wherein={"real_minerals:limestone", "real_minerals:marble"}, 
+		wherein={"real_minerals:limestone", "real_minerals:limestone_light", "real_minerals:marble"}, 
 		place = function(stratum_rand, field)
 			return vein(stratum_rand, field, 0.9, standard_vein_width, 0.015)
 		end,

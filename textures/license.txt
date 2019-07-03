@@ -145,8 +145,10 @@ The following are new for this mod:
 
 
 real_minerals_basalt.png
+real_minerals_gabbro.png
 real_minerals_granite.png
 real_minerals_limestone.png
+real_minerals_limestone_light.png
 real_minerals_marble.png
 real_minerals_quartzite.png
 real_minerals_shale_top.png
