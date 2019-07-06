@@ -11,7 +11,7 @@ local stone_types =
 	{name="sandstone", desc=S("Sandstone")},
 	{name="desert_sandstone", desc=S("Sandstone")},
 	{name="silver_sandstone", desc=S("Sandstone")},
-	{name="shale", desc=S("Shale"), dark=true, tiles={"real_minerals_shale_top.png", "real_minerals_shale_side.png"}},
+	{name="shale", desc=S("Shale"), dark=true, tiles={"real_minerals_shale_top.png", "real_minerals_shale_top.png", "real_minerals_shale_side.png"}},
 	{name="granite", desc=S("Granite")},
 	{name="basalt", desc=S("Basalt"), dark=true},
 	{name="gabbro", desc=S("Gabbro")},
@@ -19,7 +19,7 @@ local stone_types =
 	{name="obsidian", desc=S("Obsidian"), dark=true},
 	{name="marble", desc=S("Marble"), groups={flux=1}},
 	{name="quartzite", desc=S("Quartzite")},
-	{name="slate", desc=S("Slate"), tiles={"real_minerals_slate_top.png", "real_minerals_slate_side.png"}},
+	{name="slate", desc=S("Slate"), tiles={"real_minerals_slate_top.png", "real_minerals_slate_top.png", "real_minerals_slate_side.png"}},
 }
 
 local register_rock = function(rock_def)
