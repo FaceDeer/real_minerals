@@ -1,8 +1,9 @@
 local global_multiplier = 2000
+local strata_scale_multiplier = 2000
 
 mapgen_helper.register_perlin("real_minerals:metamorphic_boundary", {
 	offset = 0,
-	scale = 1,
+	scale = 2*global_multiplier,
 	spread = {x=1*global_multiplier, y=1*global_multiplier, z=1*global_multiplier},
 	seed = -400090,
 	octaves = 3,
@@ -11,27 +12,19 @@ mapgen_helper.register_perlin("real_minerals:metamorphic_boundary", {
 
 mapgen_helper.register_perlin("real_minerals:igneous_boundary", {
 	offset = 0,
-	scale = 1,
+	scale = 2*global_multiplier,
 	spread = {x=1*global_multiplier, y=1*global_multiplier, z=1*global_multiplier},
 	seed = 105510,
 	octaves = 3,
 	persist = 0.67
 })
+local igneous_displace = -global_multiplier
 
 mapgen_helper.register_perlin("real_minerals:sedimentary_strata", {
 	offset = 0,
-	scale = 1,
-	spread = {x=1*global_multiplier, y=1*global_multiplier, z=1*global_multiplier},
+	scale = 0.25*strata_scale_multiplier,
+	spread = {x=1*strata_scale_multiplier, y=1*strata_scale_multiplier, z=1*strata_scale_multiplier},
 	seed = -10510,
-	octaves = 3,
-	persist = 0.67
-})
-
-mapgen_helper.register_perlin("real_minerals:metamorphic_type", {
-	offset = 0,
-	scale = 1,
-	spread = {x=0.5*global_multiplier, y=0.25*global_multiplier, z=0.5*global_multiplier},
-	seed = 399523,
 	octaves = 3,
 	persist = 0.67
 })
@@ -64,20 +57,12 @@ local ore_field_perlin = {
 }
 mapgen_helper.register_perlin("real_minerals:ore_field", ore_field_perlin)
 
-local metamorphic_scale = 2*global_multiplier
-local strata_scale = 0.25*global_multiplier
-
-local igneous_scale = 2*global_multiplier
-local igneous_displace = -2*global_multiplier
-
---local water_level = tonumber(minetest.get_mapgen_setting("water_level"))
+local c_air = minetest.get_content_id("air")
 
 local c_stone = minetest.get_content_id("default:stone")
 local c_default_sandstone = minetest.get_content_id("default:sandstone")
 local c_desertstone = minetest.get_content_id("default:desert_stone")
 local base_stone = {[c_stone] = true, [c_default_sandstone] = true, [c_desertstone] = true}
-
-local c_air = minetest.get_content_id("air")
 
 local c_limestone_1 = minetest.get_content_id("real_minerals:limestone")
 local c_limestone_2 = minetest.get_content_id("real_minerals:limestone_light")
@@ -106,29 +91,27 @@ real_minerals.mapgen = function(minp, maxp, seed)
 	local ign_bound = mapgen_helper.perlin2d("real_minerals:igneous_boundary", minp, maxp)
 	local sed_strata = mapgen_helper.perlin2d("real_minerals:sedimentary_strata", minp, maxp)
 
-	local met_type, met_area = mapgen_helper.perlin3d("real_minerals:metamorphic_type", minp, maxp)
+	local sed_type, sed_area = mapgen_helper.perlin3d("real_minerals:sedimentary_type", minp, maxp)
 	local ign_type = mapgen_helper.perlin3d("real_minerals:igneous_type", minp, maxp)
-	local sed_type = mapgen_helper.perlin3d("real_minerals:sedimentary_type", minp, maxp)
 
 	local ore_field = mapgen_helper.perlin3d("real_minerals:ore_field", minp, maxp)
 
 	local vm, data, area = mapgen_helper.mapgen_vm_data()
 	
-	local noise_iterator = met_area:iterp_xyz(minp, maxp)
+	local noise_iterator = sed_area:iterp_xyz(minp, maxp)
 
 	for vi, x, y, z in area:iterp_xyz(minp, maxp) do
 		local vi3d = noise_iterator() -- for use with noise data
 		local vi2d = mapgen_helper.index2d(minp, maxp, x, z)
 		
-		local met_bound_value = met_bound[vi2d] * metamorphic_scale
-		local ign_bound_value = ign_bound[vi2d] * igneous_scale + igneous_displace
+		local met_bound_value = met_bound[vi2d] 
+		local ign_bound_value = ign_bound[vi2d] + igneous_displace
 		
-		local met_type_value = met_type[vi3d]
 		local ign_type_value = ign_type[vi3d]
 		local sed_type_value = sed_type[vi3d]
 		
 		local ore_field_value = ore_field[vi3d]
-		local stratum = sed_strata[vi2d] * strata_scale + y
+		local stratum = sed_strata[vi2d] + y
 
 		local next_seed = math.random()
 		math.randomseed(math.floor(stratum))
@@ -147,9 +130,9 @@ real_minerals.mapgen = function(minp, maxp, seed)
 					data[vi] = c_granite
 				end
 			elseif y < ign_bound_value + met_bound_value then
-				if met_type_value < -0.25 then
+				if sed_type_value < -0.25 then
 					data[vi] = c_marble
-				elseif met_type_value < 0.25 then
+				elseif sed_type_value < 0.25 then
 					data[vi] = c_quartzite
 				else
 					data[vi] = c_slate
@@ -226,6 +209,5 @@ minetest.register_craftitem("real_minerals:prospector", {
 	end,
 	sound = {breaks = "default_tool_breaks"},
 })
-
 
 minetest.register_on_shutdown(function() minetest.debug(dump(generated_nodes)) end)

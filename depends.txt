@@ -2,3 +2,5 @@ default
 simplecrafting_lib?
 intllib?
 mapgen_helper
+magma_conduits?
+stairs?
