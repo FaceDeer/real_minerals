@@ -35,7 +35,7 @@ local standard_vein_width = 0.05
 minetest.register_craft({
 	output = 'default:torch 4',
 	recipe = {
-		{'real_minerals:bituminous_coal'},
+		{'group:coal'},
 		{'group:stick'},
 	}
 })
@@ -44,6 +44,7 @@ local ore_list = {
 	{name="lignite", def={
 		desc=S("Lignite"),
 		wherein = sedimentary,
+		lump_groups = {coal = 1},
 		place = function(stratum_rand, field)
 			return vein(stratum_rand, field, 0, standard_vein_width, 0.005)
 		end,
@@ -51,11 +52,13 @@ local ore_list = {
 	},},
 --	{name="anthracite",	def={
 --		desc=S("Anthracite"),
+--		lump_groups = {coal = 1},
 --		wherein = sedimentary,
 --	},},
 	{name="bituminous_coal", def={
 		desc=S("Bituminous Coal"),
 		wherein = sedimentary,
+		lump_groups = {coal = 1},
 		place = function(stratum_rand, field)
 			return blob(stratum_rand, field, 0.1, 0.5, 0.01) and math.random() > 0.1
 		end,
@@ -85,14 +88,14 @@ local ore_list = {
 			vein(stratum_rand, field, 0.4, standard_vein_width, 0.005)
 		end,
 	},},
-	{name="bismuthinite", def={
-		desc=S("Bismuthinite"),
-		product='bismuth',
-		wherein={"real_minerals:granite"},
-		place = function(stratum_rand, field)
-			return blob(stratum_rand, field, 0.5, 0.75, 0.005)
-		end,
-	},},
+--	{name="bismuthinite", def={
+--		desc=S("Bismuthinite"),
+--		product='bismuth',
+--		wherein={"real_minerals:granite"},
+--		place = function(stratum_rand, field)
+--			return blob(stratum_rand, field, 0.5, 0.75, 0.005)
+--		end,
+--	},},
 	{name="cassiterite", def={
 		desc=S("Cassiterite"),
 		product='tin',
@@ -175,14 +178,14 @@ local ore_list = {
 			return vein(stratum_rand, field, 0.55, standard_vein_width, 0.0075)
 		end,
 	},},
-	{name="bauxite", def={
-		desc=S("Bauxite"),
-		product='aluminium',
-		wherein=sedimentary,
-		place = function(stratum_rand, field)
-			return blob(stratum_rand, field, 0.65, 0.6, 0.005)
-		end,
-	},},
+--	{name="bauxite", def={
+--		desc=S("Bauxite"),
+--		product='aluminium',
+--		wherein=sedimentary,
+--		place = function(stratum_rand, field)
+--			return blob(stratum_rand, field, 0.65, 0.6, 0.005)
+--		end,
+--	},},
 --	{name="lazurite", 			def={desc=S("Lazurite"),		},},
 --	{name="cinnabar", 			def={desc=S('Cinnabar'),		},},
 --	{name="cryolite",			def={desc=S('Cryolite'),		},},
@@ -258,6 +261,7 @@ local function register_ore(name, OreDef)
 	
 	minetest.register_craftitem("real_minerals:"..name, {
 		description = ore.description,
+		groups = OreDef.lump_groups,
 		inventory_image = "real_minerals_"..name.."_mineral.png",
 	})
 	

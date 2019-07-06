@@ -6,7 +6,7 @@ local S, NS = dofile(MP.."/intllib.lua")
 -- Metals
 
 local metals_list = {
-	{name='bismuth',			level=0,	desc=S('Bismuth'),},
+--	{name='bismuth',			level=0,	desc=S('Bismuth'),},
 	{name='zinc',				level=0,	desc=S('Zinc'),},
 	{name='tin',				level=0,	desc=S('Tin'),},
 	{name='copper',				level=1,	desc=S('Copper'),},
@@ -18,17 +18,17 @@ local metals_list = {
 	{name='rose_gold',			level=2,	desc=S('Rose Gold'),		recipe={"gold","gold","gold","brass"},},
 	{name='oroide',				level=2,	desc=S('Oroide'),			recipe={"copper","copper","tin","zinc"},},
 	{name='black_bronze',		level=2,	desc=S('Black Bronze'),		recipe={"copper","copper","gold","silver"},},
-	{name='bismuth_bronze',		level=2,	desc=S('Bismuth Bronze'),	recipe={"copper","copper","bismuth","tin"},},
+--	{name='bismuth_bronze',		level=2,	desc=S('Bismuth Bronze'),	recipe={"copper","copper","bismuth","tin"},},
 	{name='tumbaga',			level=2,	desc=S('Tumbaga'),			recipe={"copper","gold"},},
 	{name='bronze',				level=2,	desc=S('Bronze'),			recipe={"copper","copper","copper","tin"},},
-	{name='aluminium',			level=2,	desc=S('Aluminium'),},
+--	{name='aluminium',			level=2,	desc=S('Aluminium'),},
 	{name='platinum',			level=3,	desc=S('Platinum'),},
-	{name='pig_iron',			level=3,	desc=S('Pig Iron'),},
-	{name='wrought_iron',		level=3,	desc=S('Wrought Iron'),},
+--	{name='pig_iron',			level=3,	desc=S('Pig Iron'),},
+	{name='wrought_iron',		level=3,	desc=S('Iron'),},
 	{name='german_silver',		level=4,	desc=S('German Silver'),	recipe={"copper","copper","copper","nickel"},},
 	{name='albata',				level=4,	desc=S('Albata'),			recipe={"copper","nickel","zinc","zinc"},},
 	{name='nickel',				level=4,	desc=S('Nickel'),},
-	{name='steel',				level=4,	desc=S('Steel'),			recipe={"wrought_iron","wrought_iron","wrought_iron","pig_iron",},},
+	{name='steel',				level=4,	desc=S('Steel'),			recipe={"wrought_iron","group:flux","group:coal"},},
 	{name='monel',				level=4,	desc=S('Monel'),			recipe={"nickel","nickel","nickel","copper"},},
 	{name='black_steel',		level=5,	desc=S('Black Steel'),		recipe={"steel","steel","nickel","black_bronze"},},
 }
@@ -51,7 +51,12 @@ for i, metal in pairs(metals_list) do
 		local quantity = #metal.recipe
 		local recipe_list = {}
 		for _, input in pairs(metal.recipe) do
-			table.insert(recipe_list, "real_minerals:"..input.."_ingot")
+			if input:find(":") == nil then
+				table.insert(recipe_list, "real_minerals:"..input.."_ingot")
+			else
+				table.insert(recipe_list, input)
+				quantity = quantity - 1
+			end
 		end
 				
 		if  minetest.get_modpath("simplecrafting_lib") then

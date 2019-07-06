@@ -6,8 +6,8 @@ local stairs_mod = minetest.get_modpath("stairs")
 
 local stone_types =
 {
-	{name="limestone", desc=S("Limestone")},
-	{name="limestone_light", desc=S("Limestone")},
+	{name="limestone", desc=S("Limestone"), groups={flux=1}},
+	{name="limestone_light", desc=S("Limestone"), groups={flux=1}},
 	{name="sandstone", desc=S("Sandstone")},
 	{name="desert_sandstone", desc=S("Sandstone")},
 	{name="silver_sandstone", desc=S("Sandstone")},
@@ -17,7 +17,7 @@ local stone_types =
 	{name="gabbro", desc=S("Gabbro")},
 	{name="rhyolite", desc=S("Rhyolite")},
 	{name="obsidian", desc=S("Obsidian"), dark=true},
-	{name="marble", desc=S("Marble")},
+	{name="marble", desc=S("Marble"), groups={flux=1}},
 	{name="quartzite", desc=S("Quartzite")},
 	{name="slate", desc=S("Slate"), tiles={"real_minerals_slate_top.png", "real_minerals_slate_side.png"}},
 }
@@ -56,8 +56,7 @@ local register_rock = function(rock_def)
 				description = rock_def.desc,
 				tiles = tiles,
 				is_ground_content = true,
-				groups = {cracky=3,drop_on_dig=1,stone=1},
-		
+				groups = {cracky=3,drop_on_dig=1,stone=1},		
 				drop = {
 					max_items = 1,
 					items = {
@@ -104,6 +103,14 @@ local register_rock = function(rock_def)
 			}
 		},
 	}
+	
+	if rock_def.groups then
+		for _, v in ipairs(nodes) do
+			for group, level in pairs(rock_def.groups) do
+				v.def.groups[group] = level
+			end
+		end
+	end
 
 	if magma_conduits and magma_conduits.make_hot_node_def then
 		local new_nodes = {}
