@@ -2,6 +2,8 @@
 local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
+local stairs_mod = minetest.get_modpath("stairs")
+
 -------------------------------------------------------
 -- Ores
 
@@ -268,9 +270,10 @@ local function register_ore(name, OreDef)
 	if OreDef.product then
 		if  minetest.get_modpath("simplecrafting_lib") then
 			simplecrafting_lib.register("smelter", {
-				input = {["real_minerals:"..name] = 1},
+				input = {["real_minerals:"..name] = 1,
+						["simplecrafting_lib:heat"] = 5,
+				},
 				output = {["real_minerals:"..OreDef.product.."_ingot"] = 1},
-				cooktime = 5,
 			})
 		else
 			minetest.register_craft({
@@ -293,41 +296,27 @@ local function register_ore(name, OreDef)
 	for i, wherein in ipairs(ore.wherein) do
 		local wherein_ = wherein:gsub(":","_")
 		local wherein_textures = {}
-		if minetest.registered_nodes[wherein].tiles or minetest.registered_nodes[wherein].tile_images then
-			for _, texture in ipairs(minetest.registered_nodes[wherein].tiles) do
+		local wherein_node_def = minetest.registered_nodes[wherein]
+		if wherein_node_def.tiles or wherein_node_def.tile_images then
+			for _, texture in ipairs(wherein_node_def.tiles) do
 				table.insert(wherein_textures, texture.."^"..name_.."_ore.png")
 			end
 		else
 			wherein_textures = {name_..".png"}
 		end
 		
-		local block_textures = {}
-		for _, wherein_texture in ipairs(wherein_textures) do
-			table.insert(block_textures, wherein_texture.."^real_minerals_overlay_block.png")
-		end
-		
-		if real_minerals.config.replace_default_stone then
-			
-		else
-			
-		end
-
-		--Define a "block" form of this ore
-		minetest.register_node("real_minerals:"..name.."_in_"..wherein_.."_block", {
-			description = S("@1 Block", ore.description),
-			tiles = block_textures,
-			is_ground_content = true,
-			groups = {cracky=3,drop_on_dig=1},
-			sounds = default.node_sound_stone_defaults(),
-		})
+		-- Register the ore
 		
 		local ore_rarity = OreDef.ore_rarity or 4
-		
-		minetest.register_node("real_minerals:"..name.."_in_"..wherein_, {
-			description = S("@1 Ore", ore.description),
+		local ore_groups = copytable(wherein_node_def.groups or {})
+		ore_groups.ore = 1
+		ore_groups[name.."_in_"..wherein_.."_ore"] = 1
+	
+		local ore_node_def = {
+			description = S("@1 Ore in @2", ore.description, wherein_node_def.description),
 			tiles = wherein_textures,
 			particle_image = {ore.particle_image},
-			groups = {cracky=3,drop_on_dig=1,ore=1,dropping_like_stone=1},
+			groups = ore_groups,
 			drop = {
 				max_items = 1,
 				items = {
@@ -347,17 +336,71 @@ local function register_ore(name, OreDef)
 					}
 				}
 			},
-			sounds = default.node_sound_stone_defaults()
+			sounds = wherein_node_def.sounds
+		}
+		minetest.register_node("real_minerals:"..name.."_in_"..wherein_, ore_node_def)
+		
+		-- Bricks and blocks
+		
+		-- TODO: handle light/dark rock types
+		local block_tiles = {}
+		for _, wherein_texture in ipairs(wherein_textures) do
+			table.insert(block_tiles, wherein_texture.."^real_minerals_overlay_block.png")
+		end
+		local brick_tiles = {}
+		for _, wherein_texture in ipairs(wherein_textures) do
+			table.insert(brick_tiles, wherein_texture.."^real_minerals_overlay_brick.png")
+		end
+
+		--Define a "block" form of this ore
+		local block_groups = copytable(ore_node_def.groups)
+		minetest.register_node("real_minerals:"..name.."_in_"..wherein_.."_block", {
+			description = S("@1 Block", ore_node_def.description),
+			tiles = block_tiles,
+			is_ground_content = true,
+			groups = block_groups,
+			sounds = ore_node_def.sounds,
 		})
+		
+		local brick_groups = copytable(ore_node_def.groups)
+		minetest.register_node("real_minerals:"..name.."_in_"..wherein_.."_brick", {
+			description = S("@1 Brick", ore_node_def.description),
+			tiles = brick_tiles,
+			is_ground_content = true,
+			groups = brick_groups,
+			sounds = ore_node_def.sounds,
+		})		
+		
+		if stairs_mod then
+			--stairs.register_stair_and_slab(subname, recipeitem, groups, images, desc_stair, desc_slab, sounds, worldaligntex)
+			stairs.register_stair_and_slab(
+				name.."_in_"..wherein_.."_brick",
+				"real_minerals:"..name.."_in_"..wherein_.."_brick",
+				brick_groups,
+				brick_tiles,
+				S("@1 Brick Stair", ore_node_def.description),
+				S("@1 Brick Slab", ore_node_def.description),
+				ore_node_def.sounds,
+				false)
+			stairs.register_stair_and_slab(
+				name.."_in_"..wherein_.."_block",
+				"real_minerals:"..name.."_in_"..wherein_.."_block",
+				block_groups,
+				block_tiles,
+				S("@1 Block Stair", ore_node_def.description),
+				S("@1 Block Slab", ore_node_def.description),
+				ore_node_def.sounds,
+				true)
+		end	
 		
 		--Allow blocks to be broken down into cobble and one mineral lump
 		local recipe = {}
 		for i = 1, ore_rarity do
-			table.insert(recipe, "real_minerals:"..name.."_in_"..wherein_.."_block")
+			table.insert(recipe, "group:"..name.."_in_"..wherein_.."_ore")
 		end
 		local replacements = {}
 		for i = 1, ore_rarity do
-			table.insert(replacements, {"real_minerals:"..name.."_in_"..wherein_.."_block", wherein.."_cobble"})
+			table.insert(replacements, {"group:"..name.."_in_"..wherein_.."_ore", wherein.."_cobble"})
 		end		
 		minetest.register_craft({
 			type = "shapeless",
