@@ -3,6 +3,7 @@ local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
 local stairs_mod = minetest.get_modpath("stairs")
+local walls_mod = minetest.get_modpath("walls")
 
 local stone_types =
 {
@@ -155,6 +156,15 @@ local register_rock = function(rock_def)
 			S("@1 Block Slab", rock_def.desc),
 			default.node_sound_stone_defaults(),
 			true)
+	end
+	
+	if walls_mod then
+		walls.register("real_minerals:"..rock_def.name.."_cobble_wall", S("@1 Cobble Wall", rock_def.desc), cobble_tiles,
+			"real_minerals:"..rock_def.name.."_cobble", default.node_sound_stone_defaults())
+		walls.register("real_minerals:"..rock_def.name.."_brick_wall", S("@1 Brick Wall", rock_def.desc), brick_tiles,
+			"real_minerals:"..rock_def.name.."_brick", default.node_sound_stone_defaults())
+		walls.register("real_minerals:"..rock_def.name.."_block_wall", S("@1 Block Wall", rock_def.desc), block_tiles,
+			"real_minerals:"..rock_def.name.."_block", default.node_sound_stone_defaults())
 	end
 	
 	minetest.register_craft({

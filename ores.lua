@@ -3,6 +3,7 @@ local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
 local stairs_mod = minetest.get_modpath("stairs")
+local walls_mod = minetest.get_modpath("walls")
 
 -------------------------------------------------------
 -- Ores
@@ -391,7 +392,14 @@ local function register_ore(name, OreDef)
 				S("@1 Block Slab", ore_node_def.description),
 				ore_node_def.sounds,
 				true)
-		end	
+		end
+		
+		if walls_mod then
+			walls.register("real_minerals:"..name.."_in_"..wherein_.."_brick_wall", S("@1 Brick Wall", ore_node_def.description), brick_tiles,
+				"real_minerals:"..name.."_in_"..wherein_.."_brick", default.node_sound_stone_defaults())
+			walls.register("real_minerals:"..name.."_in_"..wherein_.."_block_wall", S("@1 Block Wall", ore_node_def.description), block_tiles,
+				"real_minerals:"..name.."_in_"..wherein_.."_block", default.node_sound_stone_defaults())
+		end
 		
 		--Allow blocks to be broken down into cobble and one mineral lump
 		local recipe = {}

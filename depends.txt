@@ -4,3 +4,4 @@ intllib?
 mapgen_helper
 magma_conduits?
 stairs?
+walls?
