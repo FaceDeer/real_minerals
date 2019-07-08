@@ -373,7 +373,6 @@ local function register_ore(name, OreDef)
 		})		
 		
 		if stairs_mod then
-			--stairs.register_stair_and_slab(subname, recipeitem, groups, images, desc_stair, desc_slab, sounds, worldaligntex)
 			stairs.register_stair_and_slab(
 				name.."_in_"..wherein_.."_brick",
 				"real_minerals:"..name.."_in_"..wherein_.."_brick",
