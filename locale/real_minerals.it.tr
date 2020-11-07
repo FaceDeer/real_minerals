@@ -1,0 +1,155 @@
+# textdomain: real_minerals
+
+
+### metals.lua ###
+
+@1 Ingot=Lingotto di @1
+Albata=Albata
+Aluminium=Alluminio
+Bismuth=Bismuto
+Bismuth Bronze=Bronzo bismuto
+Black Bronze=Bronzo nero corinzio
+Black Steel=Acciaio nero
+Block of @1=Blocco di @1
+Brass=Ottone
+Bronze=Bronzo
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Ceramic mold=Stampo in ceramica
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Clay Mold=Stampo in argilla
+Copper=Rame
+German Silver=Alpacca
+Gold=Oro
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Iron=Ferro
+Lead=Piombo
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Molding Sand=Sabbia di stampaggio
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Molding Sand Mold=Stampo in sabbia
+Monel=Monel
+Nickel=Nickel
+Oroide=Oroide
+Pig Iron=Ghisa
+Platinum=Platino
+Rose Gold=Oro rosso
+Silver=Argento
+Steel=Acciaio
+Sterling Silver=Argento sterling
+Tin=Stagno
+Tumbaga=Tumbaga
+Zinc=Zinco
+
+### metals.lua ###
+### ores.lua ###
+### rocks.lua ###
+
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Block Slab=@ 1 Block Slab
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Block Stair=@ 1 Block Stair
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Block Wall=@ 1 Block Wall
+
+### misc.lua ###
+
+Borax=Borace
+Charcoal=Carbone vegetale
+Flux=Flussante
+Peat=Torba
+Sulfur=Zolfo
+
+### ores.lua ###
+
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Ore in @2=@ 1 Minerale in @ 2
+Anthracite=Carbone
+Bauxite=Bauxite
+Bismuthinite=Bismutinite
+Bituminous Coal=Lintrace
+Cassiterite=Cassiterite
+Cinnabar=Cinabro
+Cryolite=Criolite
+Galena=Galena
+Garnierite=Garnierite
+Graphite=Grafite
+Gypsum=Gesso
+Hematite=Ematite
+Jet=Giaietto
+Kaolinite=Caolinite
+Kimberlite=Kimberlite
+Lazurite=Lazurite
+Lignite=Lignite
+Limonite=Limonite
+Magnetite=Magnetite
+Malachite=Malachite
+Native Copper=Rame nativo
+Native Gold=Oro nativo
+Native Platinum=Platino nativo
+Native Silver=Argento nativo
+Olivine=Olivina
+Ore=Minerale
+Petrified wood=Legno pietrificato
+Pitchblende=Uraninite
+Saltpeter=Salnitro
+Satin Spar=Selenite
+Selenite=Selenite
+Serpentine=Serpentina
+Sphalerite=Sfalerite
+Sylvite=Silvite
+Tenorite=Tenorite
+Tetrahedrite=Tetraedrite
+
+### ores.lua ###
+### rocks.lua ###
+
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Block=@ 1 blocco
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Brick=@ 1 mattone
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Brick Slab=@ 1 Lastra di mattoni
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Brick Stair=@ 1 Brick Stair
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Brick Wall=@ 1 Muro di mattoni
+
+### rocks.lua ###
+
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Cobble=@ 1 Cobble
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Cobble Slab=@ 1 Lastra di ciottoli
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Cobble Stair=@ 1 scala di ciottoli
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+@1 Cobble Wall=@ 1 Cobble Wall
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Basalt=Basalto
+Gabbro=Gabbro
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Granite=Granito
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Limestone=Calcare
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Marble=Marmo
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Obsidian=Ossidiana
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Quartzite=Quarzite
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Rhyolite=Riolite
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Sandstone=Arenaria
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Shale=Scisto
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Slate=Ardesia
+#WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
+Wedge and Shim Set=Set di cunei e spessori
+
+
+##### not used anymore #####
+
+Wrought Iron=Ferro battuto
+@1 Ore=Vena di @1

@@ -1,0 +1,120 @@
+# textdomain: real_minerals
+
+
+### metals.lua ###
+
+@1 Ingot=
+Albata=
+Aluminium=
+Bismuth=
+Bismuth Bronze=
+Black Bronze=
+Black Steel=
+Block of @1=
+Brass=
+Bronze=
+Ceramic mold=
+Clay Mold=
+Copper=
+German Silver=
+Gold=
+Iron=
+Lead=
+Molding Sand=
+Molding Sand Mold=
+Monel=
+Nickel=
+Oroide=
+Pig Iron=
+Platinum=
+Rose Gold=
+Silver=
+Steel=
+Sterling Silver=
+Tin=
+Tumbaga=
+Zinc=
+
+### metals.lua ###
+### ores.lua ###
+### rocks.lua ###
+
+@1 Block Slab=
+@1 Block Stair=
+@1 Block Wall=
+
+### misc.lua ###
+
+Borax=
+Charcoal=
+Flux=
+Peat=
+Sulfur=
+
+### ores.lua ###
+
+@1 Ore in @2=
+Anthracite=
+Bauxite=
+Bismuthinite=
+Bituminous Coal=
+Cassiterite=
+Cinnabar=
+Cryolite=
+Galena=
+Garnierite=
+Graphite=
+Gypsum=
+Hematite=
+Jet=
+Kaolinite=
+Kimberlite=
+Lazurite=
+Lignite=
+Limonite=
+Magnetite=
+Malachite=
+Native Copper=
+Native Gold=
+Native Platinum=
+Native Silver=
+Olivine=
+Ore=
+Petrified wood=
+Pitchblende=
+Saltpeter=
+Satin Spar=
+Selenite=
+Serpentine=
+Sphalerite=
+Sylvite=
+Tenorite=
+Tetrahedrite=
+
+### ores.lua ###
+### rocks.lua ###
+
+@1 Block=
+@1 Brick=
+@1 Brick Slab=
+@1 Brick Stair=
+@1 Brick Wall=
+
+### rocks.lua ###
+
+@1 Cobble=
+@1 Cobble Slab=
+@1 Cobble Stair=
+@1 Cobble Wall=
+Basalt=
+Gabbro=
+Granite=
+Limestone=
+Marble=
+Obsidian=
+Quartzite=
+Rhyolite=
+Sandstone=
+Shale=
+Slate=
+Wedge and Shim Set=
