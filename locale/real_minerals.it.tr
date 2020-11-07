@@ -45,11 +45,11 @@ Zinc=Zinco
 ### rocks.lua ###
 
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Block Slab=@ 1 Block Slab
+@1 Block Slab=@1 Block Slab
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Block Stair=@ 1 Block Stair
+@1 Block Stair=@1 Block Stair
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Block Wall=@ 1 Block Wall
+@1 Block Wall=@1 Block Wall
 
 ### misc.lua ###
 
@@ -62,7 +62,7 @@ Sulfur=Zolfo
 ### ores.lua ###
 
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Ore in @2=@ 1 Minerale in @ 2
+@1 Ore in @2=@1 Minerale in @2
 Anthracite=Carbone
 Bauxite=Bauxite
 Bismuthinite=Bismutinite
@@ -104,26 +104,26 @@ Tetrahedrite=Tetraedrite
 ### rocks.lua ###
 
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Block=@ 1 blocco
+@1 Block=@1 blocco
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Brick=@ 1 mattone
+@1 Brick=@1 mattone
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Brick Slab=@ 1 Lastra di mattoni
+@1 Brick Slab=@1 Lastra di mattoni
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Brick Stair=@ 1 Brick Stair
+@1 Brick Stair=@1 Brick Stair
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Brick Wall=@ 1 Muro di mattoni
+@1 Brick Wall=@1 Muro di mattoni
 
 ### rocks.lua ###
 
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Cobble=@ 1 Cobble
+@1 Cobble=@1 Cobble
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Cobble Slab=@ 1 Lastra di ciottoli
+@1 Cobble Slab=@1 Lastra di ciottoli
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Cobble Stair=@ 1 scala di ciottoli
+@1 Cobble Stair=@1 scala di ciottoli
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
-@1 Cobble Wall=@ 1 Cobble Wall
+@1 Cobble Wall=@1 Cobble Wall
 #WARNING: AUTOTRANSLATED BY GOOGLE TRANSLATE
 Basalt=Basalto
 Gabbro=Gabbro
